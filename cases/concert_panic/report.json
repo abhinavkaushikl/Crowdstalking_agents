@@ -1,0 +1,27 @@
+{
+  "case": "concert_panic",
+  "seed": 50488760,
+  "narrative": "A concert just let out near (50.1233,8.6615). Something scares the crowd within a 0.8km radius and 4 people suddenly run, 10-18 km/h, for about 27s.",
+  "n_ground_truth_events": 1,
+  "n_detected": 0,
+  "recall": 0.0,
+  "latencies_seconds": [],
+  "n_false_positives": 0,
+  "false_positives": [],
+  "per_event": [
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "start": 60.0,
+        "end": 87.3007342425496,
+        "lat": 50.123325755034884,
+        "lon": 8.661493678349904,
+        "radius_km": 0.82
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    }
+  ],
+  "final_sim_time_seconds": 168.0
+}

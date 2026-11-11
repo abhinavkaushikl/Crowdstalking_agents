@@ -1,0 +1,74 @@
+{
+  "case": "mass_dispersal",
+  "seed": 540602159,
+  "narrative": "A big event just ended. 35 people (5% of the area) break into 4 separate groups and head toward 4 different parts of the city at once (walking/transit pace), over about 46s.",
+  "n_ground_truth_events": 4,
+  "n_detected": 0,
+  "recall": 0.0,
+  "latencies_seconds": [],
+  "n_false_positives": 1,
+  "false_positives": [
+    {
+      "sim_time": 62.0,
+      "cell": [
+        2,
+        2
+      ],
+      "reason": "panic_outward",
+      "detail": "59% of 39 moving outward, 15.9 km/h",
+      "device_count": 39,
+      "mean_speed_kmh": 15.9
+    }
+  ],
+  "per_event": [
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "start": 60.0,
+        "end": 105.77694389931997,
+        "lat": 50.06712504086098,
+        "lon": 8.670556028611482
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "start": 60.0,
+        "end": 105.77694389931997,
+        "lat": 50.114457426078985,
+        "lon": 8.629022003741534
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "start": 60.0,
+        "end": 105.77694389931997,
+        "lat": 50.09048989469091,
+        "lon": 8.533222906155105
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "start": 60.0,
+        "end": 105.77694389931997,
+        "lat": 50.096992896531795,
+        "lon": 8.508284121589789
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    }
+  ],
+  "final_sim_time_seconds": 186.0
+}

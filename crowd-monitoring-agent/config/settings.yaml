@@ -1,0 +1,37 @@
+# Non-secret, human-tunable settings for the crowd-monitoring-agent pipeline.
+# API keys / credentials never go here - those stay in .env (see .env.example)
+# and are read via os.environ, loaded through python-dotenv.
+
+groq:
+  default_model: "openai/gpt-oss-120b"
+  default_max_tokens: 2000
+  max_tool_rounds: 4          # tool-calling round-trips before forcing a final answer
+  # Free tier TPM limit is low enough (8000) that even a couple of back-to-back
+  # incidents can trip it - confirmed live. Retry using the wait time Groq's
+  # own 429 response tells us, instead of failing the pipeline run.
+  rate_limit_max_retries: 3
+  rate_limit_fallback_wait_seconds: 5
+
+search:
+  google_cache_ttl_seconds: 86400   # 24h - protects the 100/day free CSE quota
+  reddit_default_limit: 15
+  reddit_search_window: "year"      # Reddit API "t" param: hour/day/week/month/year/all
+  # Each provider auto-falls back to services/mock_search.py when its own keys
+  # aren't set in .env. Set this true to force both to mock even if real keys
+  # ARE present (e.g. to run a controlled test without spending API quota).
+  force_mock: false
+
+dedup:
+  rerun_after_seconds: 300    # don't re-run the (costly) pipeline for the same
+                              # hotspot more often than this, while it's still active
+  forget_after_seconds: 600   # stop tracking a hotspot once it's been gone this long
+
+poller:
+  poll_seconds: 3             # how often poller.py re-checks crowd_risk.json
+
+context:
+  default_radius_km: 2        # fallback radius when a flag has no hotspot (variance_spike)
+  max_radius_km: 2            # cap even when a flag's own hotspot radius is larger
+  vendor_limit: 20
+  street_limit: 30
+  subscriber_limit: 15

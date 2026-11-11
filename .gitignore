@@ -1,0 +1,46 @@
+# ---- macOS ----
+.DS_Store
+._*
+
+# ---- Secrets (never commit; .env.example documents the key names) ----
+.env
+.env.*
+!.env.example
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ---- Vendored third-party checkout ----
+# openfreemap/ is a clone of hyperknot/openfreemap with its own .git dir.
+# map-app uses the *hosted* tiles at tiles.openfreemap.org, so this local
+# checkout isn't needed to run anything here.
+/openfreemap/
+
+# ---- Large OSM source data (see README: "Data not in this repo") ----
+# Regional extracts (83 MB + 174 MB) and the indexes built from them
+# (22 MB + 54 MB). Re-download the .pbf, then rebuild with
+# extract.py --build-index.
+osm-extract/data/*.osm.pbf
+osm-extract/data/*.index.json
+
+# ---- Generated simulation datasets ----
+# 411 MB + 274 MB, rebuilt by simulation/generate_*.py
+simulation/*.csv
+
+# ---- Runtime output (rewritten on every simulator tick / detector pass) ----
+simulation/live_positions.json
+simulation/live_positions.json.*
+social-media-sentiment-agent/crowd_risk.json
+crowd-monitoring-agent/crowd_monitoring_output.json
+*.tmp
+
+# ---- Run logs ----
+*.log
+social-media-sentiment-agent/crowd_anomalies_log.jsonl

@@ -1,0 +1,572 @@
+{
+  "seed": 180854569,
+  "n_ticks": 3000,
+  "simulated_minutes": 100.0,
+  "n_incidents_injected": 31,
+  "n_detected": 0,
+  "recall": 0.0,
+  "precision": 0.0,
+  "n_confirmed_flags_total": 31,
+  "n_false_positives": 31,
+  "latencies_seconds": [],
+  "median_latency_seconds": null,
+  "mean_latency_seconds": null,
+  "per_incident": [
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000518",
+          "SUB-00000113",
+          "SUB-00000048",
+          "SUB-00000460",
+          "SUB-00000225",
+          "SUB-00000485",
+          "SUB-00000053",
+          "SUB-00000680"
+        ],
+        "lat": 50.13148942658162,
+        "lon": 8.541940774253026,
+        "start": 28.0,
+        "end": 57.43509724222284
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000505",
+          "SUB-00000280",
+          "SUB-00000741",
+          "SUB-00000161",
+          "SUB-00000389",
+          "SUB-00000042",
+          "SUB-00000253",
+          "SUB-00000606"
+        ],
+        "lat": 50.1315943354634,
+        "lon": 8.524121753002524,
+        "start": 316.0,
+        "end": 347.96970886097705
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.05875762569881,
+        "lon": 8.653260777959877,
+        "radius_km": 0.47091733093869,
+        "start": 568.0,
+        "end": 598.0890511081781
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000415",
+          "SUB-00000265",
+          "SUB-00000544",
+          "SUB-00000710",
+          "SUB-00000374",
+          "SUB-00000504",
+          "SUB-00000562",
+          "SUB-00000352"
+        ],
+        "lat": 50.124912086255875,
+        "lon": 8.740100691660151,
+        "start": 1036.0,
+        "end": 1069.4805081268055
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.05398632159835,
+        "lon": 8.549261000235791,
+        "radius_km": 0.36772109840196815,
+        "start": 1426.0,
+        "end": 1456.5743777811388
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000110",
+          "SUB-00000329",
+          "SUB-00000533",
+          "SUB-00000199",
+          "SUB-00000124",
+          "SUB-00000373",
+          "SUB-00000439",
+          "SUB-00000531"
+        ],
+        "lat": 50.10134795871074,
+        "lon": 8.635645982071056,
+        "start": 1600.0,
+        "end": 1636.543689863557
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.10341112305255,
+        "lon": 8.709869282045979,
+        "radius_km": 0.42623271215465663,
+        "start": 1722.0,
+        "end": 1748.7566693935994
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.108752526716565,
+        "lon": 8.528675024574746,
+        "radius_km": 0.5269286980555332,
+        "start": 1852.0,
+        "end": 1872.2202123157078
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.15997799772541,
+        "lon": 8.556342014495586,
+        "radius_km": 0.49459169336618525,
+        "start": 2022.0,
+        "end": 2060.9245185025943
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000145",
+          "SUB-00000337",
+          "SUB-00000265",
+          "SUB-00000137",
+          "SUB-00000088",
+          "SUB-00000691",
+          "SUB-00000273",
+          "SUB-00000493"
+        ],
+        "lat": 50.04438177910929,
+        "lon": 8.587909352934016,
+        "start": 2378.0,
+        "end": 2405.1539713218763
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.04474077200223,
+        "lon": 8.65989702823391,
+        "radius_km": 0.44455477024792145,
+        "start": 2472.0,
+        "end": 2508.952858421921
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000289",
+          "SUB-00000035",
+          "SUB-00000408",
+          "SUB-00000541",
+          "SUB-00000486",
+          "SUB-00000462",
+          "SUB-00000386",
+          "SUB-00000041"
+        ],
+        "lat": 50.104697161242406,
+        "lon": 8.519935238387346,
+        "start": 2660.0,
+        "end": 2696.558363370973
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000286",
+          "SUB-00000239",
+          "SUB-00000260",
+          "SUB-00000290",
+          "SUB-00000454",
+          "SUB-00000515",
+          "SUB-00000741",
+          "SUB-00000200"
+        ],
+        "lat": 50.05166858026867,
+        "lon": 8.700337241334363,
+        "start": 2720.0,
+        "end": 2752.802777041862
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.116214512549696,
+        "lon": 8.641272621523244,
+        "radius_km": 0.41254101717706293,
+        "start": 2772.0,
+        "end": 2798.2119379991927
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.097239618836355,
+        "lon": 8.537989458929506,
+        "radius_km": 0.40620174462669983,
+        "start": 2832.0,
+        "end": 2862.4826981281103
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000355",
+          "SUB-00000585",
+          "SUB-00000718",
+          "SUB-00000667",
+          "SUB-00000267",
+          "SUB-00000639",
+          "SUB-00000481",
+          "SUB-00000724"
+        ],
+        "lat": 50.143516305691975,
+        "lon": 8.528918315739029,
+        "start": 2944.0,
+        "end": 2982.8928731557353
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000101",
+          "SUB-00000148",
+          "SUB-00000441",
+          "SUB-00000215",
+          "SUB-00000066",
+          "SUB-00000016",
+          "SUB-00000122",
+          "SUB-00000356"
+        ],
+        "lat": 50.05466749608203,
+        "lon": 8.591820893752791,
+        "start": 3156.0,
+        "end": 3185.425402620996
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000516",
+          "SUB-00000561",
+          "SUB-00000674",
+          "SUB-00000316",
+          "SUB-00000072",
+          "SUB-00000526",
+          "SUB-00000119",
+          "SUB-00000204"
+        ],
+        "lat": 50.14459771855419,
+        "lon": 8.53256974069252,
+        "start": 3384.0,
+        "end": 3419.007651992035
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.16190524954035,
+        "lon": 8.647110451171255,
+        "radius_km": 0.5403116692066328,
+        "start": 3428.0,
+        "end": 3462.2965328644386
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000087",
+          "SUB-00000617",
+          "SUB-00000614",
+          "SUB-00000543",
+          "SUB-00000112",
+          "SUB-00000236",
+          "SUB-00000434",
+          "SUB-00000691"
+        ],
+        "lat": 50.05007502356038,
+        "lon": 8.686813593683008,
+        "start": 4294.0,
+        "end": 4314.232412562903
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.039352262883845,
+        "lon": 8.74929040988227,
+        "radius_km": 0.4992451524323484,
+        "start": 4318.0,
+        "end": 4343.556162561512
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.109067696599915,
+        "lon": 8.75407052466782,
+        "radius_km": 0.5416030193486706,
+        "start": 4348.0,
+        "end": 4371.758682699721
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000580",
+          "SUB-00000695",
+          "SUB-00000460",
+          "SUB-00000591",
+          "SUB-00000324",
+          "SUB-00000361",
+          "SUB-00000359",
+          "SUB-00000205"
+        ],
+        "lat": 50.08214830267631,
+        "lon": 8.66111307155338,
+        "start": 4462.0,
+        "end": 4497.358275185095
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.13875800010651,
+        "lon": 8.678264852479503,
+        "radius_km": 0.4760270042447365,
+        "start": 4878.0,
+        "end": 4916.168672102229
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.11552005061175,
+        "lon": 8.594322324338606,
+        "radius_km": 0.49053900602278944,
+        "start": 5086.0,
+        "end": 5113.7923911884445
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "lat": 50.09564748769397,
+        "lon": 8.529207106207439,
+        "radius_km": 0.4839218086283601,
+        "start": 5172.0,
+        "end": 5206.395571826663
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000508",
+          "SUB-00000564",
+          "SUB-00000059",
+          "SUB-00000641",
+          "SUB-00000189",
+          "SUB-00000291",
+          "SUB-00000145",
+          "SUB-00000139"
+        ],
+        "lat": 50.120629090748494,
+        "lon": 8.521162080702602,
+        "start": 5318.0,
+        "end": 5357.579741332191
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000238",
+          "SUB-00000107",
+          "SUB-00000052",
+          "SUB-00000371",
+          "SUB-00000641",
+          "SUB-00000149",
+          "SUB-00000220",
+          "SUB-00000033"
+        ],
+        "lat": 50.15704928493284,
+        "lon": 8.515430777412842,
+        "start": 5402.0,
+        "end": 5423.347067810454
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000048",
+          "SUB-00000392",
+          "SUB-00000535",
+          "SUB-00000606",
+          "SUB-00000692",
+          "SUB-00000216",
+          "SUB-00000019",
+          "SUB-00000734"
+        ],
+        "lat": 50.09612599897791,
+        "lon": 8.522918123867596,
+        "start": 5762.0,
+        "end": 5801.6967774209
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000634",
+          "SUB-00000141",
+          "SUB-00000474",
+          "SUB-00000308",
+          "SUB-00000722",
+          "SUB-00000347",
+          "SUB-00000220",
+          "SUB-00000443"
+        ],
+        "lat": 50.16304448024314,
+        "lon": 8.698543878584042,
+        "start": 5830.0,
+        "end": 5859.936545562792
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "crush_inward",
+        "participants": [
+          "SUB-00000266",
+          "SUB-00000197",
+          "SUB-00000498",
+          "SUB-00000721",
+          "SUB-00000149",
+          "SUB-00000587",
+          "SUB-00000333",
+          "SUB-00000093"
+        ],
+        "lat": 50.11482961320941,
+        "lon": 8.59350175160334,
+        "start": 5948.0,
+        "end": 5968.191399543462
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "case": "riot",
+  "seed": 558983632,
+  "narrative": "Unrest breaks out near (50.1169,8.7176), 1.9km radius, people running 12-22 km/h for ~30s, a brief 8s lull, then it flares up again nearby for ~32s.",
+  "n_ground_truth_events": 2,
+  "n_detected": 0,
+  "recall": 0.0,
+  "latencies_seconds": [],
+  "n_false_positives": 1,
+  "false_positives": [
+    {
+      "sim_time": 114.0,
+      "cell": [
+        2,
+        0
+      ],
+      "reason": "crush_inward",
+      "detail": "55% of 29 converging",
+      "device_count": 29,
+      "mean_speed_kmh": 14.2
+    }
+  ],
+  "per_event": [
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "start": 60.0,
+        "end": 90.20902352992137,
+        "lat": 50.11691269682627,
+        "lon": 8.71758447619196,
+        "radius_km": 1.92
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    },
+    {
+      "ground_truth": {
+        "type": "panic_outward",
+        "start": 100.48281130873322,
+        "end": 134.49691800316336,
+        "lat": 50.11670810820562,
+        "lon": 8.717663541671227,
+        "radius_km": 1.92
+      },
+      "detected": false,
+      "latency_seconds": null,
+      "matching_flags": 0
+    }
+  ],
+  "final_sim_time_seconds": 216.0
+}

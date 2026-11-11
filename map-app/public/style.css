@@ -1,0 +1,919 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --text-primary: #1d1d1f;
+  --text-secondary: rgba(60, 60, 67, 0.6);
+  --accent: #0a84ff;
+  --accent-soft: rgba(10, 132, 255, 0.12);
+  --divider: rgba(60, 60, 67, 0.12);
+  --surface: rgba(118, 118, 128, 0.08);
+  --shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(0, 0, 0, 0.04);
+  --ease: cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(30, 30, 32, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: rgba(255, 255, 255, 0.92);
+    --text-secondary: rgba(235, 235, 245, 0.55);
+    --accent: #409cff;
+    --accent-soft: rgba(64, 156, 255, 0.18);
+    --divider: rgba(255, 255, 255, 0.1);
+    --surface: rgba(118, 118, 128, 0.16);
+    --shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.6), 0 1px 1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #0b0b0d;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Glass panel ---------- */
+
+#panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 320px;
+  max-height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: blur(28px) saturate(1.6);
+  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  z-index: 5;
+  animation: panel-in 0.5s var(--ease);
+}
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.panel-drag {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--divider);
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px 12px;
+  flex-shrink: 0;
+}
+
+.app-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(145deg, var(--accent), #5ec8ff);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.35);
+}
+
+.app-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.panel-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.panel-title h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.2px;
+}
+
+.panel-title p {
+  margin: 1px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.panel-toggle-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), transform 0.3s var(--ease);
+}
+
+.panel-toggle-btn:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.panel-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s var(--ease);
+}
+
+#panel.collapsed .panel-toggle-btn svg {
+  transform: rotate(-180deg);
+}
+
+.panel-body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 2000px;
+  opacity: 1;
+  transition: max-height 0.35s var(--ease), opacity 0.25s var(--ease), margin 0.35s var(--ease);
+}
+
+#panel.collapsed .panel-body {
+  max-height: 0;
+  opacity: 0;
+  margin-top: -4px;
+}
+
+#panel.collapsed {
+  animation: none;
+}
+
+/* ---------- City search ---------- */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 16px 8px;
+  padding: 8px 10px;
+  background: var(--surface);
+  border-radius: 11px;
+  transition: background 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  flex-shrink: 0;
+}
+
+.search-box:focus-within {
+  background: var(--glass-bg);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.search-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+#city-search {
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+#city-search::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-clear {
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  display: none;
+}
+
+.search-box.has-text .search-clear {
+  display: block;
+}
+
+.city-results {
+  list-style: none;
+  margin: 0 16px 10px;
+  padding: 0;
+  max-height: 0;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: var(--surface);
+  transition: max-height 0.3s var(--ease), margin 0.3s var(--ease), opacity 0.2s var(--ease);
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.city-results.open {
+  max-height: 168px;
+  opacity: 1;
+}
+
+.city-results li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--divider);
+  transition: background 0.15s var(--ease);
+}
+
+.city-results li:last-child {
+  border-bottom: none;
+}
+
+.city-results li:hover,
+.city-results li.active {
+  background: var(--accent-soft);
+}
+
+.city-results li .city-name {
+  font-weight: 560;
+}
+
+.city-results li .city-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.city-results .no-match {
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+/* ---------- Live device popup ---------- */
+/* maplibre-gl.css gives the popup a white box but no text color, so it
+   inherits body's --text-primary - near-white in dark mode, invisible on
+   the white box. Pin it explicitly regardless of color scheme. */
+.maplibregl-popup-content {
+  color: #1d1d1f;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- Segmented control ---------- */
+
+.segmented {
+  display: flex;
+  gap: 4px;
+  margin: 0 16px 10px;
+  padding: 3px;
+  background: var(--surface);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.seg-btn {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 4px 8px;
+  font-size: 10.5px;
+  font-weight: 560;
+  letter-spacing: -0.1px;
+  color: var(--text-secondary);
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.15s var(--ease);
+}
+
+.seg-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.seg-btn:hover {
+  color: var(--text-primary);
+}
+
+.seg-btn:active {
+  transform: scale(0.92);
+}
+
+.seg-btn.active {
+  background: var(--glass-bg);
+  color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- Hint / empty state ---------- */
+
+.hint {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin: 0 16px 10px;
+  line-height: 1.4;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 28px 20px 24px;
+  color: var(--text-secondary);
+}
+
+.empty-icon {
+  width: 34px;
+  height: 34px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* ---------- Results panel ---------- */
+
+#coords-panel {
+  overflow-y: auto;
+  padding: 0 16px 16px;
+  font-size: 12.5px;
+  flex: 1 1 auto;
+  scrollbar-width: thin;
+}
+
+.polygon-block {
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+  margin-top: 10px;
+  animation: block-in 0.35s var(--ease);
+}
+
+.polygon-block:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+@keyframes block-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.polygon-block h4 {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.polygon-block .area {
+  display: inline-block;
+  margin: 0 0 8px 0;
+  padding: 2px 9px;
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 20px;
+}
+
+.vertex-list {
+  margin: 0 0 4px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.vertex-list li {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  padding: 2px 0;
+}
+
+.section-label {
+  margin: 10px 0 5px 0;
+  font-weight: 650;
+  font-size: 11.5px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.name-list {
+  margin: 0 0 2px 0;
+  padding-left: 0;
+  list-style: none;
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.name-list li {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--divider);
+  transition: background 0.15s var(--ease);
+}
+
+.name-list li:last-child {
+  border-bottom: none;
+}
+
+.name-list li:hover {
+  background: rgba(10, 132, 255, 0.08);
+}
+
+.name-list .category {
+  color: var(--text-secondary);
+  font-size: 10.5px;
+  float: right;
+}
+
+/* loading shimmer */
+.loading-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--divider);
+  border-top-color: var(--accent);
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-text {
+  color: #ff453a;
+  font-size: 12px;
+}
+
+/* ---------- mapbox-gl-draw cursor fix (MapLibre uses maplibregl-* classes) ---------- */
+.maplibregl-map.mouse-pointer .maplibregl-canvas-container.maplibregl-interactive { cursor: pointer; }
+.maplibregl-map.mouse-move .maplibregl-canvas-container.maplibregl-interactive { cursor: move; }
+.maplibregl-map.mouse-add .maplibregl-canvas-container.maplibregl-interactive { cursor: crosshair; }
+.maplibregl-map.mouse-move.mode-direct_select .maplibregl-canvas-container.maplibregl-interactive { cursor: grab; }
+.maplibregl-map.mode-direct_select.feature-vertex.mouse-move .maplibregl-canvas-container.maplibregl-interactive { cursor: move; }
+.maplibregl-map.mode-direct_select.feature-midpoint.mouse-pointer .maplibregl-canvas-container.maplibregl-interactive { cursor: cell; }
+.maplibregl-map.mode-direct_select.feature-feature.mouse-move .maplibregl-canvas-container.maplibregl-interactive { cursor: move; }
+.maplibregl-map.mode-static.mouse-pointer .maplibregl-canvas-container.maplibregl-interactive { cursor: grab; }
+
+/* ========== Citizen.AI emergency response console (left panel, mockup) ========== */
+
+.citizen-panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 320px;
+  max-height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(14, 16, 22, 0.92), rgba(10, 11, 15, 0.92));
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255, 69, 58, 0.18);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  z-index: 6;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  opacity: 0;
+  transform: translateX(-16px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.citizen-panel.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.citizen-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 12px;
+  flex-shrink: 0;
+}
+
+.citizen-logo {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 17px;
+  background: linear-gradient(145deg, #ff453a, #ff8a65);
+  box-shadow: 0 4px 14px rgba(255, 69, 58, 0.45);
+}
+
+.citizen-brand { flex: 1 1 auto; min-width: 0; }
+
+.citizen-brand h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.citizen-brand h1 span { color: #ff6961; font-weight: 700; }
+
+.citizen-brand p {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.citizen-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ff453a;
+  box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.6);
+  animation: citizen-pulse 1.6s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes citizen-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.55); }
+  70% { box-shadow: 0 0 0 9px rgba(255, 69, 58, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 69, 58, 0); }
+}
+
+.citizen-incident {
+  margin: 0 16px 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 69, 58, 0.12);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  flex-shrink: 0;
+}
+
+.citizen-incident .ci-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ff8a80;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.citizen-incident .ci-meta {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.citizen-section {
+  padding: 0 16px 14px;
+  flex-shrink: 0;
+}
+
+/* Single scroll region for everything below the header. Letting one
+   arbitrary section be "the flexible one" while its siblings stay rigid
+   means the whole deficit lands on that one section the moment content
+   grows (confirmed: it collapsed to ~16px with 15 tweet cards present) --
+   scrolling the whole body together is the robust fix, and matches how a
+   native Apple sidebar actually behaves. */
+.citizen-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 4px;
+}
+
+.citizen-section-grow {
+  padding-bottom: 16px;
+}
+
+.citizen-section-label {
+  margin: 0 0 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.citizen-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 12px;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 650;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease), filter 0.2s var(--ease);
+}
+
+.citizen-btn svg { width: 15px; height: 15px; }
+
+.citizen-btn:hover { filter: brightness(1.12); }
+.citizen-btn:active { transform: scale(0.97); }
+
+.citizen-btn-danger {
+  background: linear-gradient(135deg, #ff453a, #d70015);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(255, 69, 58, 0.35);
+}
+
+.citizen-btn-primary {
+  background: linear-gradient(135deg, #0a84ff, #0064d6);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(10, 132, 255, 0.3);
+}
+
+.citizen-btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.citizen-services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.citizen-service-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 9px 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 9.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+}
+
+.citizen-service-btn span { letter-spacing: 0.1px; }
+
+.citizen-service-btn:hover { background: rgba(255, 69, 58, 0.18); }
+.citizen-service-btn:active { transform: scale(0.94); }
+
+.citizen-sub-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.citizen-sub-list-capped {
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.citizen-btn-compact {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+/* ---------- Live tweet feed (Citizen.AI left panel) ---------- */
+
+.hunter-loading {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.tweet-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 2px;
+}
+
+.tweet-card {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  animation: tweet-in 0.3s var(--ease);
+}
+
+@keyframes tweet-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tweet-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.tweet-handle {
+  font-size: 11.5px;
+  font-weight: 650;
+  color: #5ec8ff;
+}
+
+.tweet-time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.tweet-text {
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+  word-break: break-word;
+}
+
+.tweet-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---------- Nearby Restaurants (Map Explorer right panel) ---------- */
+
+.section-divider {
+  margin: 0 0 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--divider);
+  animation: block-in 0.35s var(--ease);
+}
+
+.restaurant-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 160px;
+  overflow-y: auto;
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.restaurant-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--divider);
+  transition: background 0.15s var(--ease);
+}
+
+.restaurant-list li:last-child {
+  border-bottom: none;
+}
+
+.restaurant-list li:hover {
+  background: var(--accent-soft);
+}
+
+.restaurant-name {
+  font-size: 12px;
+  font-weight: 560;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.restaurant-category {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.citizen-sub-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 11px;
+  font-size: 11.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: "SF Mono", Menlo, monospace;
+}
+
+.citizen-sub-list li:last-child { border-bottom: none; }
+
+.citizen-sub-list .sub-id { color: rgba(255, 255, 255, 0.8); }
+
+.citizen-sub-list .sub-dist {
+  color: #ff8a80;
+  font-weight: 700;
+}
+
+.citizen-sub-list .sub-empty {
+  padding: 14px 11px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: -apple-system, sans-serif;
+  text-align: center;
+}
+
+.citizen-toast {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(48, 209, 88, 0.95);
+  color: #04250f;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.citizen-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 760px) {
+  .citizen-panel { display: none; }
+}

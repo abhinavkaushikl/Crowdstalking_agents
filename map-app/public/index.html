@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OpenFreeMap Viewer</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@mapbox/mapbox-gl-draw@1.5.0/dist/mapbox-gl-draw.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@mapbox/mapbox-gl-draw@1.5.0/dist/mapbox-gl-draw.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="citizen-panel" class="citizen-panel">
+    <div class="citizen-header">
+      <div class="citizen-logo">⚡</div>
+      <div class="citizen-brand">
+        <h1>citizen<span>.AI</span></h1>
+        <p>Emergency Response Console</p>
+      </div>
+      <span class="citizen-live-dot" title="Live incident"></span>
+    </div>
+
+    <div class="citizen-scroll">
+      <div class="citizen-incident" id="citizen-incident"></div>
+
+      <div class="citizen-section">
+        <p class="citizen-section-label">Dispatch</p>
+        <button class="citizen-btn citizen-btn-danger" id="btn-call-emergency">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 5a2 2 0 0 1 2-2h2.3a1 1 0 0 1 .97.76l1 4a1 1 0 0 1-.46 1.1L7.1 10a14 14 0 0 0 6.9 6.9l1.14-1.71a1 1 0 0 1 1.1-.46l4 1a1 1 0 0 1 .76.97V19a2 2 0 0 1-2 2h-1C9.7 21 3 14.3 3 6V5Z" fill="currentColor"/></svg>
+          Call Emergency — 112
+        </button>
+        <div class="citizen-services-grid">
+          <button class="citizen-service-btn" data-service="Police">🚓<span>Police</span></button>
+          <button class="citizen-service-btn" data-service="Medical">🚑<span>Medical</span></button>
+          <button class="citizen-service-btn" data-service="Fire">🚒<span>Fire</span></button>
+          <button class="citizen-service-btn" data-service="Rescue">🛟<span>Rescue</span></button>
+        </div>
+      </div>
+
+      <div class="citizen-section">
+        <p class="citizen-section-label">Public Alerting</p>
+        <button class="citizen-btn citizen-btn-primary" id="btn-spread-alert">📢 Trigger Automated Alert (Tweet)</button>
+        <button class="citizen-btn citizen-btn-secondary" id="btn-send-message">✉️ Send Mass Alert to Subscribers</button>
+        <button class="citizen-btn citizen-btn-secondary" id="btn-email-vendors">📧 Email Nearby Vendors</button>
+      </div>
+
+      <div class="citizen-section" id="citizen-hunter-section" style="display:none">
+        <p class="citizen-section-label">💬 Live Posts Near the Zone</p>
+        <div id="citizen-hunter-body"></div>
+      </div>
+
+      <div class="citizen-section">
+        <p class="citizen-section-label">Affected Subscribers · by distance from epicenter</p>
+        <ul class="citizen-sub-list citizen-sub-list-capped" id="citizen-sub-list"></ul>
+      </div>
+    </div>
+
+    <div id="citizen-toast" class="citizen-toast"></div>
+  </div>
+
+  <div id="panel">
+    <div class="panel-drag"></div>
+
+    <header class="panel-header">
+      <div class="app-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 5 5.2 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.8-3-7-7-7Z" fill="currentColor"/><circle cx="12" cy="9" r="2.4" fill="white"/></svg>
+      </div>
+      <div class="panel-title">
+        <h1>Map Explorer</h1>
+        <p>Draw a polygon to discover what's inside</p>
+      </div>
+      <button id="panel-toggle" class="panel-toggle-btn" title="Minimize panel" type="button">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </header>
+
+    <div class="panel-body">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" class="search-icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <input id="city-search" type="text" placeholder="Search cities..." autocomplete="off" />
+      <button id="city-search-clear" class="search-clear" title="Clear" type="button">&times;</button>
+    </div>
+    <ul id="city-results" class="city-results"></ul>
+
+    <div class="segmented">
+      <button id="toggle-3d" class="seg-btn" title="Tilt the map to see 3D buildings">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 7l8 4 8-4M12 11v10" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>3D</span>
+      </button>
+      <button id="toggle-terrain" class="seg-btn" title="Enable hillshade terrain">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 18 9 8l4 6 2-3 6 7H3Z" fill="currentColor"/></svg>
+        <span>Terrain</span>
+      </button>
+      <button id="fly-demo" class="seg-btn" title="Fly to a city with tall buildings">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 9 9l-7 2 7 2 3 7 3-7 7-2-7-2-3-7Z" fill="currentColor"/></svg>
+        <span>Fly to NYC</span>
+      </button>
+      <button id="toggle-live" class="seg-btn" title="Show simulated live device positions (run live_position_simulator.py first)">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="currentColor"/><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Live</span>
+      </button>
+    </div>
+    <p id="live-status" class="hint" style="display:none"></p>
+
+    <div class="section-divider" id="nearby-restaurants-section" style="display:none">
+      <p class="section-label">🍽️ Restaurants &amp; Shops Near the Zone</p>
+      <ul class="restaurant-list" id="nearby-restaurants-list"></ul>
+    </div>
+
+    <p class="hint">Use the polygon tool (top-left on the map). Click points, double-click to finish.</p>
+
+    <div id="coords-panel">
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" class="empty-icon"><path d="M4 7l6-3 6 3 4-2v12l-4 2-6-3-6 3V7Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <p>Draw a polygon to see its lat/lng vertices,<br/>streets, and nearby places here.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

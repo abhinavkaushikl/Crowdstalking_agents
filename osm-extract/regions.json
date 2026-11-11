@@ -1,0 +1,16 @@
+{
+  "Frankfurt": {
+    "pbf": "data/Frankfurt.osm.pbf",
+    "index": "data/Frankfurt.index.json",
+    "bbox": { "minLat": 49.93, "minLng": 8.44, "maxLat": 50.35, "maxLng": 9.086 },
+    "center": { "lat": 50.1109, "lng": 8.6821 },
+    "zoom": 13
+  },
+  "Berlin": {
+    "pbf": "data/Berlin.osm.pbf",
+    "index": "data/Berlin.index.json",
+    "bbox": { "minLat": 52.23, "minLng": 12.76, "maxLat": 52.82, "maxLng": 13.98 },
+    "center": { "lat": 52.52, "lng": 13.405 },
+    "zoom": 12
+  }
+}
